@@ -2,16 +2,16 @@ const { Schema, model } = require('mongoose');
 
 const UserSchema = new Schema({
     username: {
-        type: String
-        // unique
-        // required
-        // trimmed
+        type: String,
+        unique: true,
+        required: true,
+        trim: true
     },
     email: {
-        type: String
-        // required
-        // unique
-        // must match valid email address (Mongoose matching validation)
+        type: String,
+        required: true,
+        unique: true,
+        match: [/.+@.+\..+/, "Invalid email address"]
     },
     thoughts: [
         {

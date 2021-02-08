@@ -2,9 +2,10 @@ const { Schema, model } = require('mongoose');
 
 const ThoughtSchema = new Schema({
     thoughtText: {
-        type: String
-        // required
-        // must be between 1 and 280 characters
+        type: String,
+        required: true,
+        minlength: 1,
+        maxlength: 280
     },
     createdAt: {
         type: Date,
@@ -12,8 +13,8 @@ const ThoughtSchema = new Schema({
         // use moment.js in a getter method to format the timestamp on query
     },
     username: {
-        type: String
-        // required
+        type: String,
+        required: true
     },
     reactions: [
         {
@@ -22,13 +23,13 @@ const ThoughtSchema = new Schema({
                 // default value is set to a new object id
             },
             reactionBody: {
-                type: String
-                // required
-                // 280 character maximum
+                type: String,
+                required: true,
+                maxlength: 280
             },
             username: {
-                type: String
-                // required
+                type: String,
+                required: true
             },
             createdAt: {
                 type: Date,
