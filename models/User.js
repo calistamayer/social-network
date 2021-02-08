@@ -13,8 +13,30 @@ const UserSchema = new Schema({
         // unique
         // must match valid email address (Mongoose matching validation)
     },
-    thoughts: [],
-    friends: []
+    thoughts: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Thought'
+        }
+    ],
+    friends: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'User'
+        }
+    ]
+},
+    {
+        toJSON: {
+            virtuals: true,
+        },
+        id: false
+    }
+);
+
+// get total count of friends on retrieval
+UserSchema.virtual('friendCount').get(function () {
+    return this.friends.length;
 });
 
 const User = model('User', UserSchema);

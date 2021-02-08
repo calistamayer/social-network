@@ -15,7 +15,33 @@ const ThoughtSchema = new Schema({
         type: String
         // required
     },
-    reactions: []
+    reactions: [
+        {
+            reactionId: {
+                type: ObjectId
+                // default value is set to a new object id
+            },
+            reactionBody: {
+                type: String
+                // required
+                // 280 character maximum
+            },
+            username: {
+                type: String
+                // required
+            },
+            createdAt: {
+                type: Date,
+                default: Date.now
+                // use moment in a getter method to format the timestamp on query
+            }
+        }
+    ]
+});
+
+// get total count of reactions on retrieval
+ThoughtSchema.virtual('reactionCount').get(function () {
+    return this.reactions.length;
 });
 
 // create the Thought model using the ThoughtSchema
