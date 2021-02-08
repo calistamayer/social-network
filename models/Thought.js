@@ -1,5 +1,26 @@
 const { Schema, model } = require('mongoose');
 
+const ReactionSchema = new Schema ({
+    reactionId: {
+        type: ObjectId
+        // default value is set to a new object id
+    },
+    reactionBody: {
+        type: String,
+        required: true,
+        maxlength: 280
+    },
+    username: {
+        type: String,
+        required: true
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
+        // use moment in a getter method to format the timestamp on query
+    }
+});
+
 const ThoughtSchema = new Schema({
     thoughtText: {
         type: String,
@@ -16,28 +37,7 @@ const ThoughtSchema = new Schema({
         type: String,
         required: true
     },
-    reactions: [
-        {
-            reactionId: {
-                type: ObjectId
-                // default value is set to a new object id
-            },
-            reactionBody: {
-                type: String,
-                required: true,
-                maxlength: 280
-            },
-            username: {
-                type: String,
-                required: true
-            },
-            createdAt: {
-                type: Date,
-                default: Date.now
-                // use moment in a getter method to format the timestamp on query
-            }
-        }
-    ]
+    reactions: [ReactionSchema]
 },
     {
         toJSON: {
