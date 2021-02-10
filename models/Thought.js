@@ -1,6 +1,12 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model, Types } = require('mongoose');
 
-const ReactionSchema = new Schema ({
+
+const ReactionSchema = new Schema({
+    // set custom id to avoide confusion with parent thought _id
+    reactionId: {
+        type: Schema.Types.ObjectId,
+        default: () => new Types.ObjectId()
+    },
     reactionBody: {
         type: String,
         required: true,
@@ -14,8 +20,15 @@ const ReactionSchema = new Schema ({
         type: Date,
         default: Date.now
         // use moment in a getter method to format the timestamp on query
+        // get: createdAtVal => dateFormat(createdAtVal)
     }
-});
+},
+    {
+        toJSON: {
+            getters: true
+        }
+    }
+);
 
 const ThoughtSchema = new Schema({
     thoughtText: {
@@ -28,6 +41,7 @@ const ThoughtSchema = new Schema({
         type: Date,
         default: Date.now
         // use moment.js in a getter method to format the timestamp on query
+        // get: createdAtVal => dateFormat(createdAtVal)
     },
     username: {
         type: String,
@@ -38,6 +52,7 @@ const ThoughtSchema = new Schema({
     {
         toJSON: {
             virtuals: true,
+            getters: true
         },
         id: false
     }
